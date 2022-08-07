@@ -1,6 +1,7 @@
 from flask import Flask
 from markupsafe import escape
 from flask import render_template
+from flask import request
 
 app = Flask(__name__)
 
@@ -16,6 +17,10 @@ def cadastros():
 def usuario():
     return render_template('usuario.html', titulo="Cadastro de Usuario")
 
+@app.route("/cadastros/caduser", methods=['POST'])
+def caduser():
+    return request.form
+
 @app.route("/cadastros/anuncios")
 def anuncio():
     return render_template('anuncio.html')
@@ -27,7 +32,6 @@ def anuncios():
 @app.route("/anuncios/pergunta")
 def pergunta():
     return render_template('pergunta.html')
-
 
 @app.route("/anuncios/compra")
 def compra():
