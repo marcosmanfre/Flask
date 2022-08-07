@@ -8,13 +8,21 @@ app = Flask(__name__)
 def index():
      return render_template('index.html')
 
-@app.route("/cadastro/usuario")
+@app.route("/cadastros")
+def cadastros():
+    return render_template('cadastros.html')
+
+@app.route("/cadastros/usuario")
 def usuario():
     return render_template('usuario.html', titulo="Cadastro de Usuario")
 
-@app.route("/cadastro/anuncios")
+@app.route("/cadastros/anuncios")
 def anuncio():
     return render_template('anuncio.html')
+
+@app.route("/anuncios")
+def anuncios():
+    return render_template('anuncios.html')
 
 @app.route("/anuncios/pergunta")
 def pergunta():
@@ -31,9 +39,17 @@ def favoritos():
     print("favorito inserido")
     return ""
 
+@app.route("/config")
+def config():
+    return render_template('config.html')
+
 @app.route("/config/categoria")
 def categoria():
     return render_template('categoria.html')
+
+@app.route("/relatorios")
+def relatorios():
+    return render_template('relatorios.html')
 
 @app.route("/relatorios/vendas")
 def relVendas():
