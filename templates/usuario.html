@@ -3,11 +3,11 @@
 
 
 
-<title> Cadastro de Usuario - {{titulo}}</title>
+<title> Cadastro de Usuário - {{titulo}}</title>
 
 <body>
     <h4>{{titulo}}</h4>
-    <form action="caduser" method="post">
+    <form action="/usuario/criar" method="post">
         <p><label for="user">Username</label></p>
         <p><input type="text" id="user" name="user"></p>
 
@@ -31,6 +31,7 @@
                 <th>E-mail</th>
                 <th>Senha</th>
                 <th>Endereço</th>
+                <th>Deletar</th>
             </tr>
         </thead>
         <tbody>
@@ -40,6 +41,8 @@
                     <td>{{ usuario.email }}</td>
                     <td>{{ usuario.senha }}</td>
                     <td>{{ usuario.end }}</td>
+                    <td><a href={{ url_for("editarusuario",id=usuario.id) }}>Editar?</a></td>
+                    <td><a href={{ url_for("deletarusuario",id=usuario.id) }}>Deletar?</a></td>
                 </tr>
             {% endfor %}
         </tbody>
