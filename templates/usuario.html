@@ -17,9 +17,34 @@
         <p><label for="passwd">Password</label></p>
         <p><input type="text" id="passwd" name="passwd"></p>
 
+        <p><label for="end">Endereco</label></p>
+        <p><input type="text" id="end" name="end"></p>
+
         <p><input type="submit" value="Cadastrar"></p>
     
     </form>
+    <h4>Lista de Usuario - {{titulo}}</h4>
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>E-mail</th>
+                <th>Senha</th>
+                <th>Endereço</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for usuario in usuarios %}
+                <tr>
+                    <td>{{ usuario.nome }}</td>
+                    <td>{{ usuario.email }}</td>
+                    <td>{{ usuario.senha }}</td>
+                    <td>{{ usuario.end }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
 
 
 </body>

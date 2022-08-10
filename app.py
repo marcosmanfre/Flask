@@ -2,8 +2,29 @@ from flask import Flask
 from markupsafe import escape
 from flask import render_template
 from flask import request
+from flask_sqlalchemy import SQLAlchemy
+from flask import url_for
+from flask import redirect
+
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:marcos123@localhost:3306/mydb'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db = SQLAlchemy(app)
+
+class Usuario(db.Model):
+    id = db.Column('usu_id', db.Integer, primary_key=True)
+    nome = db.Column('usu_nome', db.String(256))
+    email = db.Column('usu_email', db.String(256))
+    senha = db.Column('usu_senha', db.String(256))
+    end = db.Column('usu_end', db.String(256))
+
+    def __init__(self, nome, email, senha, end):
+        self.nome = nome
+        self.email = email
+        self.senha = senha
+        self.end = end
 
 @app.route("/")
 def index():
@@ -14,12 +35,16 @@ def cadastros():
     return render_template('cadastros.html')
 
 @app.route("/cadastros/usuario")
-def usuario():
-    return render_template('usuario.html', titulo="Cadastro de Usuario")
+def cadusuario():
+    return render_template('usuario.html', usuarios = Usuario.query.all(), titulo="Cadastro de Usuário")
+
 
 @app.route("/cadastros/caduser", methods=['POST'])
 def caduser():
-    return request.form
+    usuario = Usuario(request.form.get('user'),request.form.get('email'),request.form.get('passwd'),request.form.get('end'))
+    db.session.add(usuario)
+    db.session.commit()
+    return redirect(url_for('cadusuario'))
 
 @app.route("/cadastros/anuncios")
 def anuncio():
@@ -62,4 +87,9 @@ def relVendas():
 @app.route("/relatorios/compras")
 def relCompras():
     return render_template('relCompras.html')
+
+if __name__ == 'app':  
+    db.create_all()
+  
+
 
