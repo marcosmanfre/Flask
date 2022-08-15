@@ -14,6 +14,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 class Usuario(db.Model):
+    __tablename__ = "usuario"
     id = db.Column('usu_id', db.Integer, primary_key=True)
     nome = db.Column('usu_nome', db.String(256))
     email = db.Column('usu_email', db.String(256))
@@ -30,11 +31,9 @@ class Categoria(db.Model):
     __tablename__ = "categoria"
     id = db.Column('cat_id', db.Integer, primary_key=True)
     nome = db.Column('cat_nome', db.String(256))
-    desc = db.Column('cat_desc', db.String(256))
 
     def __init__ (self, nome, desc):
         self.nome = nome
-        self.desc = desc
 
 class Anuncio(db.Model):
     __tablename__ = "anuncio"
@@ -52,6 +51,53 @@ class Anuncio(db.Model):
         self.qtd = qtd
         self.preco = preco
         self.cat_id = cat_id
+        self.usu_id = usu_id
+
+
+class Pergunta(db.Model):
+    __tablename__ = "pergunta"
+    id = db.Column('per_id', db.Integer, primary_key=True)
+    anu_id = db.Column('anu_id',db.Integer, db.ForeignKey("anuncio.anu_id"))
+    usu_id = db.Column('usu_id',db.Integer, db.ForeignKey("usuario.usu_id"))
+    perguntas = db.Column('per_pergunta', db.String(256))
+    respostas = db.Column('per_resposta', db.String(256))
+
+
+    def __init__ (self, anu_id, usu_id, per_pergunta, per_resposta):
+        self.anu_id = anu_id
+        self.usu_id = usu_id
+        self.per_pergunta = per_pergunta
+        self.per_resposta = per_resposta
+       
+
+class Favorito(db.Model):
+    __tablename__ = "favorito"
+    fav_id = db.Column('fav_id', db.Integer, primary_key=True)
+    anu_id = db.Column('anu_id',db.Integer, db.ForeignKey("anuncio.anu_id"))
+    usu_id = db.Column('usu_id',db.Integer, db.ForeignKey("usuario.usu_id"))
+
+
+    def __init__ (self, anu_id, usu_id, ):
+        self.anu_id = anu_id
+        self.usu_id = usu_id
+
+
+class Compra(db.Model):
+    __tablename__ = "Compra"
+    com_id = db.Column('com_id', db.Integer, primary_key=True)
+    com_qtd = db.Column('com_qtd', db.Integer)
+    com_preco = db.Column('com_preco', db.Integer)
+    com_total = db.Column('com_total', db.Integer)
+    anu_id = db.Column('anu_id',db.Integer, db.ForeignKey("anuncio.anu_id"))
+    usu_id = db.Column('usu_id',db.Integer, db.ForeignKey("usuario.usu_id"))
+
+
+    def __init__ (self, com_id, com_qtd, com_preco, com_total, anu_id, usu_id):
+        self.com_id = com_id
+        self.com_qtd = com_qtd
+        self.com_preco = com_preco
+        self.com_total = com_total
+        self.anu_id = anu_id
         self.usu_id = usu_id
 
 
@@ -117,10 +163,34 @@ def anuncios():
 
 @app.route("/anuncio/novo", methods=['POST'])
 def novoanuncio():
-    anuncio = Anuncio(request.form.get('nome'), request.form.get('desc'),request.form.get('qtd'),request.form.get('preco'),request.form.get('cat'),request.form.get('uso'))
+    anuncio = Anuncio(request.form.get('nome'), request.form.get('desc'),request.form.get('qtd'),request.form.get('preco'),request.form.get('cat'),request.form.get('usu'))
     db.session.add(anuncio)
     db.session.commit()
     return redirect(url_for('anuncio'))
+
+@app.route("/anuncio/editar/<int:id>", methods=['GET','POST'])
+def editaranuncio(id):
+    anuncio = Anuncio.query.get(id)
+    if request.method == 'POST':
+        anuncio.nome = request.form.get('nome')
+        anuncio.desc = request.form.get('desc')
+        anuncio.qtd = request.form.get('qtd')
+        anuncio.preco = request.form.get('preco')
+        anuncio.cat = request.form.get('cat')
+        anuncio.usu = request.form.get('usu')
+        db.session.add(anuncio)
+        db.session.commit()
+        return redirect(url_for('anuncio'))
+    
+    return render_template('edianuncio.html', anuncio = anuncio, titulo="Anuncio")
+
+@app.route("/anuncio/deletar<int:id>")
+def deletaranuncio(id):
+    anuncio = Anuncio.query.get(id)
+    db.session.delete(anuncio)
+    db.session.commit()
+    return redirect(url_for('anuncio'))
+    
 
 
 @app.route("/anuncios/pergunta")
@@ -149,6 +219,25 @@ def categoria():
 def novacategoria():
     categoria = Categoria(request.form.get('nome'), request.form.get('desc'))
     db.session.add(categoria)
+    db.session.commit()
+    return redirect(url_for('categoria'))
+
+@app.route("/categoria/editar/<int:id>", methods=['GET','POST'])
+def editarcategoria(id):
+    categoria = Categoria.query.get(id)
+    if request.method == 'POST':
+        categoria.nome = request.form.get('nome')
+        categoria.desc = request.form.get('desc')
+        db.session.add(categoria)
+        db.session.commit()
+        return redirect(url_for('categoria'))
+    
+    return render_template('edicategoria.html', categoria = categoria, titulo="Categoria")
+
+@app.route("/categoria/deletar<int:id>")
+def deletarcategoria(id):
+    categoria = Categoria.query.get(id)
+    db.session.delete(categoria)
     db.session.commit()
     return redirect(url_for('categoria'))
 
