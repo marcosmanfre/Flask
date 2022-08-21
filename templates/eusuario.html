@@ -3,34 +3,73 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="/static/css/bootstrap.css">
+        <link rel="stylesheet" href="/static/css/style.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
         <title> Manfré & Cia - Comprar e vender - Edição de {{titulo}}</title>
     </head>
-
-
-<body>
-    <h4>Edicao de {{titulo}}</h4>
-    <form action="/usuario/editar/{{ usuario.id }}" method="post">
-        <p><label for="user">Username</label>
-        <input type="text" id="user" name="user" value="{{usuario.nome}}"></p>
-
-        <p><label for="email">E-mail</label>
-        <input type="text" id="email" name="email" value="{{usuario.email}}"></p>       
-
-        <p><label for="passwd">Password</label>
-        <input type="text" id="passwd" name="passwd" value="{{usuario.senha}}"></p>
-
-        <p><label for="end">Endereco</label>
-        <input type="text" id="end" name="end" value="{{usuario.end}}"></p>
         
-        <p><input type="submit" value="Alterar"></p>
-    </form>
-    <a href={{url_for("usuario")}}> Cancelar</a>
+<body>
+   
+    <div class="container-fluid">
+    <h4>Edicao de {{titulo}}</h4>
+        <form action="/usuario/editar/{{ usuario.id }}" method="post" id="needs-validation" novalidate class="row g-3">           
+      
+          <div class="col-md-6">
+            <label for="user" class="form-label">Nome</label>
+            <input type="text" class="form-control" id="user" name="user" value="{{usuario.nome}}" placeholder="Digite o seu nome" required>
+            <small id="nomehelp" class="invalid-feedback">
+              Campo nome obrigatório.
+            </small>
+          </div>
+          <div class="col-md-6">
+            <label for="email" class="form-label">E-mail</label>
+            <input type="text" class="form-control" id="email" name ="email" value="{{usuario.email}}" placeholder="Digite o seu e-mail" required>
+            <small id="emailhelp" class="invalid-feedback">
+              Campo e-mail obrigatório.
+            </small>
+          </div>    
+          <div class="col-md-6">
+            <label for="passwd" class="form-label">Password</label>
+            <input type="text" class="form-control" id="passwd" name="passwd" value="{{usuario.senha}}" placeholder="Digite a sua senha" required>
+            <small id="passwdhelp" class="invalid-feedback">
+              Campo endereço obrigatório.
+            </small>
+          </div>
+          <div class="col-md-6">
+            <label for="end" class="form-label">Endereço</label>
+            <input type="text" class="form-control" id="end" name="end" value="{{usuario.end}}" placeholder="Digite o seu endereço" required>
+            <small id="enderecohelp" class="invalid-feedback">
+              Campo endereço obrigatório.
+            </small>
+          </div>
+        
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-    <noscript>Atualize seu navegador</noscript>
-</body>
+          <div class="col-12 p-3">
+            <button type="submit" class="btn btn-primary">Alterar</button>
+            <a href={{url_for("usuario")}}> Cancelar</a>
+          </div>
+        </form>
+     
+      </div>
 
+    <footer>
+        <div class="bg-secondary p-3" id="rodape">
+          <div class="row">
+            <div class="col-12">
+              <p class="text-center text-light m-0">&copy; Copyright Manfré & Cia - Presidente Prudente - 2022</p>
+            </div>
+          </div>
+        </div>
+    </footer>
+    
+    
+    
+        <script src="/static/js/main.js"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+        <noscript>Atualize seu navegador</noscript>
+    
 </html>
+    

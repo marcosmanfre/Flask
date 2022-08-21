@@ -3,73 +3,185 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="/static/css/bootstrap.css">
+        <link rel="stylesheet" href="/static/css/style.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-        <title> Manfré & Cia -  Comprar e vender - Cadastro de {{titulo}}</title>
+        <title> Cadastro de - {{titulo}}</title>
     </head>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" id="cabecalho">
+      <a class="navbar-brand" href="#"></a>
+      <img src="/static/img/logo-site.PNG" class="d-inline-block align-top" alt="Logo marca Manfré & Cia">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Alterna navegação">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link" href={{ url_for("index")}}>Início <span class="sr-only">(Página atual)</span></a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Cadastros
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href={{ url_for("usuario")}}>Cadastro de Usuário</a>
+              <a class="dropdown-item" href={{ url_for("anuncio")}}>Cadastro de Anúncio</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Anúncios
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="/#anuncios">Anúncios Ativos</a>
+              <a class="dropdown-item" href={{  url_for("pergunta")}}>Perguntas</a>
+              <a class="dropdown-item" href={{  url_for("pergunta")}}>Favoritos</a>
+             
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Configurações
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href={{  url_for("categoria")}}>Categoria</a>
+            </div>
+          </li>
 
+          <li class="nav-item">
+            <a class="nav-link" href={{ url_for("relatorios")}}>Relatórios</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href={{ url_for("logout")}}>Logout</a>
+          </li>
+        </ul>
+      </div>
+  </nav>
+ 
 <body>
-    <h4>Cadastro de {{titulo}}</h4>
-    <form action="/anuncio/novo" method="post">
-        <p><label for="nome">Nome</label>
-        <input type="text" id="nome" name="nome"></p>
+   
+   
+    <div class="container-fluid">
+        <h4>Cadastro de {{titulo}}</h4>
+        <div class="col-12">
+          <form action="/anuncio/novo" method="post" id="needs-validation" novalidate>
+            <div class="form-group row">
+              <label for="nome" class="col-sm-2 col-form-label col-form-label-sm">Nome</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control form-control-sm" id="nome" name="nome" placeholder="Digite o nome do produto" required>
+                <small id="nomehelp" class="invalid-feedback">
+                  Campo nome obrigatório.
+                </small>
+              </div>
+            </div>
+            <div class="form-group row">
+                <label for="desc" class="col-sm-2 col-form-label col-form-label-sm">Descrição</label>
+                <div class="col-sm-10">
+                  <textarea class="form-control form-control-sm" id="desc" name="desc" placeholder="Digite a descrição do produto" required></textarea>
+                  <small id="deschelp" class="invalid-feedback">
+                    Campo descrição obrigatório.
+                  </small>
+                </div>
+            </div>
+            <div class="form-group row">
+              <label for="qtd" class="col-sm-2 col-form-label col-form-label-sm">Quantidade</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control form-control-sm" id="qtd" name="qtd" placeholder="Digite a quantidade em estoque"
+                  required>
+                <small id="qtdhelp" class="invalid-feedback">
+                  Campo quantidade obrigatório.
+                </small>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="preco" class="col-sm-2 col-form-label col-form-label-sm">Preço</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control form-control-sm" id="preco" name="preco" placeholder="Digite o preço"
+                  required>
+                <small id="precohelp" class="invalid-feedback">
+                  Campo preço obrigatório.
+                </small>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="cat" class="col-sm-2 col-form-label col-form-label-sm">Categoria</label>
+              <div class="col-sm-10">
+                <select id="cat" name="cat">
+                    {% for categoria in categorias %} 
+                        <option value="{{ categoria.id }}">{{ categoria.nome }}</option>
+                    {% endfor %}
+                </select>
+              </div>
+            </div>
+            <div class="form-group row">
+                <label for="usu" class="col-sm-2 col-form-label col-form-label-sm">Usuário</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control form-control-sm" id="usu" name="usu" placeholder="Digite o código do usuário"
+                    required>
+                  <small id="usuhelp" class="invalid-feedback">
+                    Campo usuário obrigatório.
+                  </small>
+                </div>
+              </div>
 
-        <p><label for="desc">Desc</label>
-        <textarea rows="4" cols="50" id="desc" name="desc"></textarea></p>       
 
-        <p><label for="qtd">Quantidade</label>
-        <input type="text" id="qtd" name="qtd"></p>
-
-        <p><label for="preco">Preco</label>
-        <input type="text" id="preco" name="preco"></p>
-        
-        <p><label for="cat">Categoria</label>
-        <select id="cat" name="cat">
-            {% for categoria in categorias %} 
-                <option value="{{ categoria.id }}">{{ categoria.nome }}</option>
-            {% endfor %}
-        </select></p>
-
-        <p><label for="usu">Usuario</label>
-        <input type="text" id="usu" name="usu"></p>
-
-           
-
-        <p><input type="submit" value="Cadastrar"></p>
+              <button type="submit" class="btn btn-primary my-1">Cadastrar</button>
+            
+          </div>
+      </div>
     </form>
+  </div>
+</div>
 
-    <h4>Lista de {{titulo}}</h4>
-    <table>
-        <thead>
-            <tr>
+
+    <div class="container-fluid">  
+        <h4>Lista de - {{titulo}}</h4>
+        <table class="table table-striped table-responsive table-bordered">
+            <thead class="thread-default">
+                <tr>
                 <th>Nome</th>
-                <th>Desc</th>
-                <th>Qtd</th>
+                <th>Descrição</th>
+                <th>Quantidade</th>
                 <th>Preco</th>
                 <th>Categoria</th>
                 <th>Usuario</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for anuncio in anuncios %}
-                <tr>
-                    <td>{{ anuncio.nome }}</td>
-                    <td>{{ anuncio.desc }}</td>
-                    <td>{{ anuncio.qtd }}</td>
-                    <td>{{ anuncio.preco }}</td>
-                    <td>{{ anuncio.cat_id }}</td>
-                    <td>{{ anuncio.usu_id }}</td>
-
-                    <td><a href={{ url_for("editaranuncio",id=anuncio.id) }}>Editar?</a></td>
-                    <td><a href={{ url_for("deletaranuncio",id=anuncio.id) }}>Deletar?</a></td>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for anuncio in anuncios %}
+                    <tr>
+                        <td>{{ anuncio.nome }}</td>
+                        <td>{{ anuncio.desc }}</td>
+                        <td>{{ anuncio.qtd }}</td>
+                        <td>{{ anuncio.preco }}</td>
+                        <td>{{ anuncio.cat_id }}</td>
+                        <td>{{ anuncio.usu_id }}</td>
 
+                        <td><a href={{ url_for("editaranuncio",id=anuncio.id) }}>Editar?</a></td>
+                        <td><a href={{ url_for("deletaranuncio",id=anuncio.id) }}>Deletar?</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+ 
+<footer>
+    <div class="bg-secondary p-3" id="rodape">
+      <div class="row">
+        <div class="col-12">
+          <p class="text-center text-light m-0">&copy; Copyright Manfré & Cia - Presidente Prudente - 2022</p>
+        </div>
+      </div>
+    </div>
+</footer>
+
+
+
+    <script src="/static/js/main.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <noscript>Atualize seu navegador</noscript>
-</body>
 
 </html>

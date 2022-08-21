@@ -1,55 +1,163 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="/static/css/bootstrap.css">
+        <link rel="stylesheet" href="/static/css/style.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <title> Cadastro de - {{titulo}}</title>
+    </head>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" id="cabecalho">
+      <a class="navbar-brand" href="#"></a>
+      <img src="/static/img/logo-site.PNG" class="d-inline-block align-top" alt="Logo marca Manfré & Cia">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Alterna navegação">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link" href={{ url_for("index")}}>Início <span class="sr-only">(Página atual)</span></a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Cadastros
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href={{ url_for("usuario")}}>Cadastro de Usuário</a>
+              <a class="dropdown-item" href={{ url_for("anuncio")}}>Cadastro de Anúncio</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Anúncios
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="/#anuncios">Anúncios Ativos</a>
+              <a class="dropdown-item" href={{  url_for("pergunta")}}>Perguntas</a>
+              <a class="dropdown-item" href={{  url_for("pergunta")}}>Favoritos</a>
+             
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Configurações
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href={{  url_for("categoria")}}>Categoria</a>
+            </div>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href={{ url_for("relatorios")}}>Relatórios</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href={{ url_for("logout")}}>Logout</a>
+          </li>
+        </ul>
+      </div>
+  </nav>
+ 
 
 
 
-<title> Cadastro de Usuário - {{titulo}}</title>
 
 <body>
-    <h4>{{titulo}}</h4>
-    <form action="/usuario/criar" method="post">
-        <p><label for="user">Username</label></p>
-        <p><input type="text" id="user" name="user"></p>
+    <section class="py-3 text-center container" id="principal">
+        <div class="row py-lg-3">
+          <div class="col-lg-8 col-sd-8 mx-auto">
+            <h1 class="fw-light">Cadastro de Usúario</h1>
+            <p class="lead text-muted">Formulário para cadastro</p>
+  
+          </div>
+        </div>
+    </section>
+    <div class="container-fluid">
+        <form action="/usuario/criar" method="post" id="needs-validation" novalidate class="row g-3">           
+      
+          <div class="col-md-6">
+            <label for="user" class="form-label">Nome</label>
+            <input type="text" class="form-control" id="user" name="user" placeholder="Digite o seu nome" required>
+            <small id="nomehelp" class="invalid-feedback">
+              Campo nome obrigatório.
+            </small>
+          </div>
+          <div class="col-md-6">
+            <label for="email" class="form-label">E-mail</label>
+            <input type="text" class="form-control" id="email" name ="email" placeholder="Digite o seu e-mail" required>
+            <small id="emailhelp" class="invalid-feedback">
+              Campo e-mail obrigatório.
+            </small>
+          </div>    
+          <div class="col-md-6">
+            <label for="passwd" class="form-label">Password</label>
+            <input type="text" class="form-control" id="passwd" name="passwd"  placeholder="Digite a sua senha" required>
+            <small id="passwdhelp" class="invalid-feedback">
+              Campo endereço obrigatório.
+            </small>
+          </div>
+          <div class="col-md-6">
+            <label for="end" class="form-label">Endereço</label>
+            <input type="text" class="form-control" id="end" name="end"  placeholder="Digite o seu endereço" required>
+            <small id="enderecohelp" class="invalid-feedback">
+              Campo endereço obrigatório.
+            </small>
+          </div>
+        
 
-        <p><label for="email">E-mail</label></p>
-        <p><input type="text" id="email" name="email"></p>
+          <div class="col-12 p-3">
+            <button type="submit" class="btn btn-primary">Cadastrar</button>
+          </div>
+        </form>
+      </div>
 
-        <p><label for="passwd">Password</label></p>
-        <p><input type="text" id="passwd" name="passwd"></p>
-
-        <p><label for="end">Endereco</label></p>
-        <p><input type="text" id="end" name="end"></p>
-
-        <p><input type="submit" value="Cadastrar"></p>
-    
-    </form>
-    <h4>Lista de Usuario - {{titulo}}</h4>
-    <table>
-        <thead>
-            <tr>
-                <th>Nome</th>
-                <th>E-mail</th>
-                <th>Senha</th>
-                <th>Endereço</th>
-                <th>Deletar</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for usuario in usuarios %}
+    <div class="container-fluid">  
+        <h4>Lista de Usuario - {{titulo}}</h4>
+        <table class="table table-striped table-responsive table-bordered">
+            <thead class="thread-default">
                 <tr>
-                    <td>{{ usuario.nome }}</td>
-                    <td>{{ usuario.email }}</td>
-                    <td>{{ usuario.senha }}</td>
-                    <td>{{ usuario.end }}</td>
-                    <td><a href={{ url_for("editarusuario",id=usuario.id) }}>Editar?</a></td>
-                    <td><a href={{ url_for("deletarusuario",id=usuario.id) }}>Deletar?</a></td>
+                    <th>Nome</th>
+                    <th>E-mail</th>
+                    <th>Senha</th>
+                    <th>Endereço</th>
+                    <th>Deletar</th>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-
+            </thead>
+            <tbody>
+                {% for usuario in usuarios %}
+                    <tr>
+                        <td>{{ usuario.nome }}</td>
+                        <td>{{ usuario.email }}</td>
+                        <td>{{ usuario.senha }}</td>
+                        <td>{{ usuario.end }}</td>
+                        <td><a href={{ url_for("editarusuario",id=usuario.id) }}>Editar?</a></td>
+                        <td><a href={{ url_for("deletarusuario",id=usuario.id) }}>Deletar?</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
 
 </body>
+
+
+<footer>
+    <div class="bg-secondary p-3" id="rodape">
+      <div class="row">
+        <div class="col-12">
+          <p class="text-center text-light m-0">&copy; Copyright Manfré & Cia - Presidente Prudente - 2022</p>
+        </div>
+      </div>
+    </div>
+</footer>
+
+
+
+    <script src="/static/js/main.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <noscript>Atualize seu navegador</noscript>
 
 </html>
